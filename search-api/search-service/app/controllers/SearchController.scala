@@ -21,7 +21,7 @@ class SearchController @Inject()(@Named(ActorNames.SEARCH_ACTOR) searchActor: Ac
     def search() = loggingAction.async { implicit request =>
         val internalReq = getRequest(ApiId.APPLICATION_SEARCH)
         setHeaderContext(internalReq)
-        val secureContent = commonHeaders().getOrDefault("x-user-channel-id", Boolean);
+        val secureContent = commonHeaders().getOrDefault(SearchConstants.searchSecureContent, Boolean);
         internalReq.put(SearchConstants.searchSecureContent,secureContent);
         val filters = internalReq.getRequest.getOrDefault(SearchConstants.filters, new java.util.HashMap()).asInstanceOf[java.util.Map[String, Object]]
         val visibilityObject = filters.getOrDefault("visibility","")
